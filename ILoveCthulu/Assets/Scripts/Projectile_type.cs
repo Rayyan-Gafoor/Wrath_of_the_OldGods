@@ -25,6 +25,10 @@ public class Projectile_type : MonoBehaviour
             Debug.Log("Contact with player");
             damage.take_damage(enemy_damage);
         }
+        else if(other.tag!="Enemy")
+        {
+            Destroy(gameObject);
+        }
     }
 
 }

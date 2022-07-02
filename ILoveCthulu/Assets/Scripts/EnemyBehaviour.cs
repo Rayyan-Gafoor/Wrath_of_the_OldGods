@@ -34,8 +34,9 @@ public class EnemyBehaviour : MonoBehaviour
 
     //States
     [Header("Enemy States")]
-    public float sight_range, attack_range;
-    public bool player_insight, player_in_attack;
+    public float sight_range, attack_range, p_vision;
+    public bool player_insight;
+    public bool player_in_attack;
     
 
     // Start is called before the first frame update
@@ -57,14 +58,47 @@ public class EnemyBehaviour : MonoBehaviour
         {
             patrol();
         }
-        if (!player_in_attack && player_insight)
+        if (!player_in_attack && player_insight && player__infront())
         {
             chase();
         }
-        if (player_in_attack && player_insight)
+        /*if (player_in_attack && player_insight())
+        {
+            agent.SetDestination(transform.position);
+            transform.LookAt(player);
+        }*/
+        if (player_in_attack && player_insight && player__infront())
         {
             attack();
         }
+    }
+    /*bool player_insight()
+    {
+        RaycastHit hit;
+        Vector3 player__dir = player.position - transform.position;
+
+        if (Physics.Raycast(transform.position, player__dir, out hit, sight_range))
+        {
+
+            if (hit.collider.transform == player)
+            {
+                //Debug.DrawLine(transform.position, target.position, Color.green);
+                Debug.DrawLine(transform.position, player.position, Color.yellow);
+                return true;
+            }
+        }
+        return false;
+    }*/
+    bool player__infront()
+    {
+        Vector3 player__dir = transform.position - player.transform.position;
+        float angle = Vector3.Angle(transform.forward, player__dir);
+        if (Mathf.Abs(angle) > p_vision && Mathf.Abs(angle) < 270)
+        {
+            Debug.DrawLine(transform.position, player.transform.position, Color.red);
+            return true;
+        }
+        return false;
     }
     void patrol()
     {
@@ -118,6 +152,8 @@ public class EnemyBehaviour : MonoBehaviour
             Invoke(nameof(reset_attack), time_between_attacks);
         }
     }
+
+
     void reset_attack()
     {
         attacked = false;
