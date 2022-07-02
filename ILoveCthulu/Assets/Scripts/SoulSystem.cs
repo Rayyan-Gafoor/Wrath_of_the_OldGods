@@ -83,14 +83,14 @@ public class SoulSystem : MonoBehaviour
         soul_text2.SetText(soul_count2 + "");
         increase_magic();
         soul_control();
-        if (Input.GetKeyUp(KeyCode.Escape) && menu == 0) 
+        if (Input.GetKeyUp(KeyCode.Tab) && menu == 0) 
         {
             skill_menu.SetActive(true);
             menu = 1;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true; ;
         }
-        else if(Input.GetKeyUp(KeyCode.Escape) && menu == 1)
+        else if(Input.GetKeyUp(KeyCode.Tab) && menu == 1)
         {
             skill_menu.SetActive(false);
             menu = 0;

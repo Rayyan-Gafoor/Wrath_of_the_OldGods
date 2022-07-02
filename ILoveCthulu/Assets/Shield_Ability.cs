@@ -20,7 +20,7 @@ public class Shield_Ability : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Alpha2))
+        if (Input.GetKey(KeyCode.Alpha2) && souls.magic_bar.fillAmount>0)
         {
 
             activate_shield();
