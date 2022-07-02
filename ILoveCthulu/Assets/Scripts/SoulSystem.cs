@@ -8,7 +8,10 @@ public class SoulSystem : MonoBehaviour
 {
   
     public float soul_count;
+    public float soul_count2;
     public TextMeshProUGUI soul_text;
+    public TextMeshProUGUI soul_text2;
+    public Image soul_bar;
     int menu = 0;
     //Referenced Scripts
     [Header("References")]
@@ -65,6 +68,7 @@ public class SoulSystem : MonoBehaviour
 
     void Start()
     {
+        magic_bar.fillAmount = 0;
         skill_menu.SetActive(false);
         player = GameObject.Find("Player").transform;
         weapon = gun.GetComponent<Weapon>();
@@ -74,8 +78,11 @@ public class SoulSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        soul_count2 = soul_count;
         soul_text.SetText(soul_count + "");
-        
+        soul_text2.SetText(soul_count2 + "");
+        increase_magic();
+        soul_control();
         if (Input.GetKeyUp(KeyCode.Escape) && menu == 0) 
         {
             skill_menu.SetActive(true);
@@ -271,7 +278,7 @@ public class SoulSystem : MonoBehaviour
         }
     }
    
-    void decrease_magic(float deplete_amount)
+   public void decrease_magic(float deplete_amount)
     {
         magic_bar.fillAmount -= deplete_amount / max_magic;
     }
@@ -280,4 +287,8 @@ public class SoulSystem : MonoBehaviour
         magic_bar.fillAmount += magic_regen / 100;
     }
     #endregion
+    void soul_control()
+    {
+        soul_bar.fillAmount = soul_count / 100;
+    }
 }
